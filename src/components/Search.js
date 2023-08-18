@@ -2,7 +2,7 @@ import Input from "./Input";
 import Button from "./Button";
 
 const Search = ({props}) => {
-    const {setItems, items, setAlert, setCitems, search, setSearch} = props;
+    const {setItems, items, setAlert, search, setSearch} = props;
 
     return (
         <div className="flex p-2 justify-between w-full">

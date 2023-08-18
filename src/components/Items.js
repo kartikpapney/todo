@@ -54,7 +54,7 @@ function Items({ props }) {
                                     <Button
                                         onClick={(e) => {
                                             const newList = items.filter((val, cidx) => {
-                                                return idx != cidx;
+                                                return idx !== cidx;
                                             })
                                             setItems(newList);
                                         }}

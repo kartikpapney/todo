@@ -1,12 +1,16 @@
 import { useState } from 'react';
 
 const useStore = () => {
-    const localData = localStorage.getItem('todo')||"";
-    const [data, setData] = useState(JSON.parse(localData));
+    // localStorage.removeItem('todo')
+    const localData = localStorage.getItem('todo-data');
+    const [data, setData] = useState(localData?JSON.parse(localData):[]);
 
     const setLocalData = (newData) => {
-        setData(newData)
-        localStorage.setItem('todo', JSON.stringify(newData));
+        if(newData) {
+            setData(newData)
+            localStorage.setItem('todo-data', JSON.stringify(newData));
+        }
+        
     };
 
     return [data, setLocalData];

@@ -47,7 +47,17 @@ function App() {
               search,
               setSearch
             }}/>
-          <Items 
+          {
+            items.length===0?
+            <div className='flex items-center justify-center'>
+                <div
+                className="m-4 rounded-lg px-6 py-5 text-neutral-600"
+                role="alert">
+                Hurray!! Nothing To Do
+                </div>
+            </div>
+            :
+            <Items 
             props={{
               update,
               setUpdate,
@@ -57,6 +67,7 @@ function App() {
               citems,
               setCitems,
             }}/>
+          }
         </>
       }
       </div>

@@ -22,7 +22,7 @@ function App() {
     if(alert) {
       const interval = setInterval(() => {
         setAlert('');
-      }, 2000);
+      }, 1000);
       return function() {
         clearInterval(interval)
       }
@@ -30,8 +30,8 @@ function App() {
   }, [alert])
 
   return (
-    <div className="flex bg-blue-100 w-12/12 justify-center h-fit min-h-screen">
-       <div className='w-6/12 bg-blue-400'>
+    <div className="flex bg-blue-100 justify-center min-h-screen">
+       <div className='bg-blue-400 w-full max-w-md h-auto'>
       {
         alert?
           <Alert value={alert}/>
@@ -55,7 +55,7 @@ function App() {
               setItems,
               setAlert,
               citems,
-              setCitems
+              setCitems,
             }}/>
         </>
       }

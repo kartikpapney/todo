@@ -8,7 +8,7 @@ const Search = ({props}) => {
         const isThere = items.some((a) => a.name.toLowerCase() === search.toLowerCase());
         if(search === '') {
             setAlert("Task can't be empty")
-        } else if(search.length>30) {
+        } else if(search.length > 100) {
             setAlert("Please make your task short and precise (upto 30 character)")
         } else if(isThere) {
             setAlert('Task already there');

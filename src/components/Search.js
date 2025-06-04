@@ -2,7 +2,7 @@ import Input from "./Input";
 import Button from "./Button";
 
 const Search = ({props}) => {
-    const {setItems, items, setAlert, search, setSearch} = props;
+    const {setItems, items, setAlert, search, setSearch, selectedDate} = props;
 
     const handleAddItem = function(e) {
         const isThere = items.some((a) => a.name.toLowerCase() === search.toLowerCase());
@@ -13,29 +13,30 @@ const Search = ({props}) => {
         } else if(isThere) {
             setAlert('Task already there');
         } else {
-            const nitems = [...items]
-            nitems.push({
+            const nitems = [...items];
+            nitems.unshift({  // Add new task at the top
                 name: search,
-                done: false
-            })
-            setItems(nitems)
+                done: false,
+                createdAt: selectedDate // Use the selected date instead of today
+            });
+            setItems(nitems);
+            setSearch(''); // Clear input after adding
         }
     }
 
     return (
-        <div className="flex p-2 justify-between w-full">
-            <Input 
-                value={search}
-                disabled={false}
-                onChange={(e) => {
-                    setSearch(e.target.value);
-                }}
-                onEnterKey={handleAddItem}
-                placeholder={"Your Task Here!!"}
-            />
-            <Button 
-                value={"Add"}
-                onClick={handleAddItem}/>
+        <div className="mb-8">
+            <div className="flex gap-3">
+                <Input 
+                    value={search}
+                    disabled={false}
+                    onChange={(e) => {
+                        setSearch(e.target.value);
+                    }}
+                    onEnterKey={handleAddItem}
+                    placeholder={"Add a new task..."}
+                />
+            </div>
         </div>
     )
 }

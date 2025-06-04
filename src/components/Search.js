@@ -5,7 +5,7 @@ const Search = ({props}) => {
     const {setItems, items, setAlert, search, setSearch, selectedDate} = props;
 
     const handleAddItem = function(e) {
-        const isThere = items.some((a) => a.name.toLowerCase() === search.toLowerCase());
+        const isThere = items.some((a) => a.name.toLowerCase() === search.toLowerCase() && a.createdAt === selectedDate);
         if(search === '') {
             setAlert("Task can't be empty")
         } else if(search.length > 100) {

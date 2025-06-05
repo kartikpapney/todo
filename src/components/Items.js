@@ -46,6 +46,34 @@ function Items({ props }) {
         setEditValue('');
     }
 
+    // Move task to next day
+    const moveTaskToNextDay = (itemName) => {
+        const updatedItems = items.map(item => {
+            if (item.name === itemName) {
+                const currentDate = new Date(item.createdAt);
+                currentDate.setDate(currentDate.getDate() + 1);
+                const nextDay = currentDate.toISOString().split('T')[0];
+                return { ...item, createdAt: nextDay };
+            }
+            return item;
+        });
+        setItems(updatedItems);
+    }
+
+    // Move task to previous day
+    const moveTaskToPrevDay = (itemName) => {
+        const updatedItems = items.map(item => {
+            if (item.name === itemName) {
+                const currentDate = new Date(item.createdAt);
+                currentDate.setDate(currentDate.getDate() - 1);
+                const prevDay = currentDate.toISOString().split('T')[0];
+                return { ...item, createdAt: prevDay };
+            }
+            return item;
+        });
+        setItems(updatedItems);
+    }
+
     // Filter items based on search term and selected date
     const filteredItems = items.filter(item => {
         const matchesSearch = item.name.toLowerCase().includes((searchTerm || '').toLowerCase());
@@ -164,6 +192,26 @@ function Items({ props }) {
                                     </>
                                 ) : (
                                     <>
+                                        <Button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                moveTaskToPrevDay(item.name);
+                                            }}
+                                            value={"←"}
+                                            variant="secondary"
+                                            className="w-8 h-8 flex items-center justify-center p-0"
+                                            title="Move to previous day"
+                                        />
+                                        <Button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                moveTaskToNextDay(item.name);
+                                            }}
+                                            value={"→"}
+                                            variant="secondary"
+                                            className="w-8 h-8 flex items-center justify-center p-0"
+                                            title="Move to next day"
+                                        />
                                         <Button
                                             onClick={(e) => {
                                                 e.stopPropagation();

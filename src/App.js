@@ -4,6 +4,8 @@ import Items from './components/Items';
 import { useEffect, useState } from 'react';
 import Alert from './components/Alert';
 import useStore from './utils/useStore';
+import { Helmet } from 'react-helmet';
+import logo from './logo.png';
 function App() {
   const [alert, setAlert] = useState('');
   const [items, setItems] = useStore([]);
@@ -74,8 +76,12 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white flex justify-center py-8 px-4">
+      <Helmet>
+        <title>Tasks - {formatDateDisplay(selectedDate)}</title>
+      </Helmet>
        <div className='w-full max-w-2xl'>
-        {/* Header */}
+        
+        {/* Date Header */}
         <div className="text-center mb-8">
           
           {/* Date selector with navigation */}
@@ -91,7 +97,12 @@ function App() {
               </button>
               
               <div className="text-center min-w-[200px]">
-                <div className="text-lg font-medium text-black">
+                <div className="flex items-center justify-center text-lg font-medium text-black">
+                  <img 
+                    src={logo} 
+                    alt="Todo App Logo" 
+                    className="h-5 w-5 mr-2" 
+                  />
                   {formatDateDisplay(selectedDate)}
                 </div>
                 <div className="text-sm text-gray-500">

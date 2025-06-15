@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import Alert from './components/Alert';
 import useStore from './utils/useStore';
 import { Helmet } from 'react-helmet';
-import logo from './logo.png';
 function App() {
   const [alert, setAlert] = useState('');
   const [items, setItems] = useStore([]);
@@ -80,14 +79,13 @@ function App() {
         <title>Tasks - {formatDateDisplay(selectedDate)}</title>
       </Helmet>
        <div className='w-full max-w-2xl'>
-        
-        {/* Date Header */}
+        {/* Header */}
         <div className="text-center mb-8">
           
           {/* Date selector with navigation */}
           <div className="flex flex-col items-center gap-4">
             {/* Date navigation */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center w-full gap-2 sm:gap-4">
               <button
                 onClick={goToPreviousDay}
                 className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full transition-colors text-gray-600 hover:text-black"
@@ -96,16 +94,11 @@ function App() {
                 &lt;
               </button>
               
-              <div className="text-center min-w-[200px]">
-                <div className="flex items-center justify-center text-lg font-medium text-black">
-                  <img 
-                    src={logo} 
-                    alt="Todo App Logo" 
-                    className="h-5 w-5 mr-2" 
-                  />
+              <div className="text-center flex-1 max-w-[200px]">
+                <div className="text-lg font-medium text-black truncate">
                   {formatDateDisplay(selectedDate)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-500 truncate">
                   {new Date(selectedDate).toLocaleDateString('en-US', { 
                     year: 'numeric', 
                     month: 'long', 
@@ -123,15 +116,14 @@ function App() {
               </button>
             </div>
             
-            {/* Today button at bottom */}
-            {selectedDate !== new Date().toISOString().split('T')[0] && (
-              <button
-                onClick={goToToday}
-                className="px-4 py-2 text-sm text-gray-500 hover:text-black border border-gray-300 hover:border-black rounded-lg transition-all duration-200"
-              >
-                Go to Today
-              </button>
-            )}
+            {/* Today button at bottom - always visible */}
+            <button
+              onClick={goToToday}
+              className={`px-4 py-2 text-sm ${selectedDate === new Date().toISOString().split('T')[0] ? 'text-gray-400 border-gray-200' : 'text-gray-500 hover:text-black border-gray-300 hover:border-black'} border rounded-lg transition-all duration-200`}
+              disabled={selectedDate === new Date().toISOString().split('T')[0]}
+            >
+              {selectedDate === new Date().toISOString().split('T')[0] ? "Current Day" : "Go to Today"}
+            </button>
           </div>
         </div>
 

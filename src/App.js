@@ -4,6 +4,7 @@ import Items from './components/Items';
 import { useEffect, useState } from 'react';
 import Alert from './components/Alert';
 import useStore from './utils/useStore';
+import { exportTasksToCSV } from './utils/exportUtils';
 import { Helmet } from 'react-helmet';
 function App() {
   const [alert, setAlert] = useState('');
@@ -26,6 +27,26 @@ function App() {
 
   const goToToday = () => {
     setSelectedDate(new Date().toISOString().split('T')[0]);
+  };
+
+  // Export functions
+  const exportCurrentDayTasks = () => {
+    const tasksToExport = items.filter(item => item.createdAt === selectedDate);
+    if (tasksToExport.length === 0) {
+      setAlert('No tasks to export for this day');
+      return;
+    }
+    exportTasksToCSV(tasksToExport, 'filtered', selectedDate);
+    setAlert('Tasks exported successfully');
+  };
+
+  const exportAllTasks = () => {
+    if (items.length === 0) {
+      setAlert('No tasks to export');
+      return;
+    }
+    exportTasksToCSV(items, 'all', selectedDate);
+    setAlert('All tasks exported successfully');
   };
 
   // Helper function to format date display
@@ -124,6 +145,30 @@ function App() {
             >
               {selectedDate === new Date().toISOString().split('T')[0] ? "Current Day" : "Go to Today"}
             </button>
+
+            {/* Export options */}
+            <div className="flex flex-wrap justify-center gap-2 mt-2">
+              <button
+                onClick={exportCurrentDayTasks}
+                className="px-3 py-1.5 text-sm text-gray-500 hover:text-black border border-gray-300 hover:border-black rounded-lg transition-all duration-200 flex items-center gap-1"
+                title="Export tasks for this day"
+              >
+                <span className="hidden sm:inline">Export</span> Day
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              </button>
+              <button
+                onClick={exportAllTasks}
+                className="px-3 py-1.5 text-sm text-gray-500 hover:text-black border border-gray-300 hover:border-black rounded-lg transition-all duration-200 flex items-center gap-1"
+                title="Export all tasks"
+              >
+                <span className="hidden sm:inline">Export</span> All
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
